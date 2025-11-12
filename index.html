@@ -1049,14 +1049,9 @@
   </script>
   <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Capturar parâmetros da URL
   const params = new URLSearchParams(window.location.search);
 
-  // Se existir CPF e Nome, salvar no localStorage
- document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-
-  // Extrair dados do usuário
+  // 🔹 Extrair dados do usuário
   const dadosUsuario = {
     nome: decodeURIComponent(params.get("nome") || ""),
     cpf: decodeURIComponent(params.get("cpf") || ""),
@@ -1066,30 +1061,26 @@ document.addEventListener("DOMContentLoaded", () => {
     nome_mae: decodeURIComponent(params.get("nome_mae") || "")
   };
 
-  // Extrair UTMs automaticamente
+  // 🔹 Extrair e salvar UTMs automaticamente
   const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   utmKeys.forEach(key => {
     if (params.has(key)) {
-      dadosUsuario[key] = params.get(key);
-      localStorage.setItem(key, params.get(key)); // também salva individualmente
+      const value = params.get(key);
+      dadosUsuario[key] = value;
+      localStorage.setItem(key, value);
     }
   });
 
-  // Salvar tudo junto
+  // 🔹 Salvar dados consolidados
   localStorage.setItem("dadosUsuario", JSON.stringify(dadosUsuario));
   console.log("✅ Dados + UTMs salvos no localStorage:", dadosUsuario);
-});
 
-    console.log("✅ Dados salvos no localStorage:", dadosUsuario);
-  } else {
-    // Caso não haja parâmetros, apenas logar o status
-    console.log("ℹ️ Nenhum parâmetro recebido via URL.");
-  }
-
-  // Exibir dados carregados (se houver)
+  // 🔹 Logar status
   const dadosSalvos = JSON.parse(localStorage.getItem("dadosUsuario") || "{}");
   if (dadosSalvos && dadosSalvos.cpf) {
     console.log("📦 Dados disponíveis no localStorage:", dadosSalvos);
+  } else {
+    console.warn("⚠️ Nenhum dado válido encontrado na URL.");
   }
 });
 </script>
