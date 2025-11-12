@@ -1053,17 +1053,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
 
   // Se existir CPF e Nome, salvar no localStorage
-  if (params.has("cpf") && params.has("nome")) {
-    const dadosUsuario = {
-      nome: decodeURIComponent(params.get("nome") || ""),
-      cpf: decodeURIComponent(params.get("cpf") || ""),
-      telefone: decodeURIComponent(params.get("telefone") || params.get("numero") || ""),
-      data_nascimento: decodeURIComponent(params.get("data_nascimento") || ""),
-      sexo: decodeURIComponent(params.get("sexo") || ""),
-      nome_mae: decodeURIComponent(params.get("nome_mae") || "")
-    };
+ document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
 
-    localStorage.setItem("dadosUsuario", JSON.stringify(dadosUsuario));
+  // Extrair dados do usuário
+  const dadosUsuario = {
+    nome: decodeURIComponent(params.get("nome") || ""),
+    cpf: decodeURIComponent(params.get("cpf") || ""),
+    telefone: decodeURIComponent(params.get("telefone") || params.get("numero") || ""),
+    data_nascimento: decodeURIComponent(params.get("data_nascimento") || ""),
+    sexo: decodeURIComponent(params.get("sexo") || ""),
+    nome_mae: decodeURIComponent(params.get("nome_mae") || "")
+  };
+
+  // Extrair UTMs automaticamente
+  const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  utmKeys.forEach(key => {
+    if (params.has(key)) {
+      dadosUsuario[key] = params.get(key);
+      localStorage.setItem(key, params.get(key)); // também salva individualmente
+    }
+  });
+
+  // Salvar tudo junto
+  localStorage.setItem("dadosUsuario", JSON.stringify(dadosUsuario));
+  console.log("✅ Dados + UTMs salvos no localStorage:", dadosUsuario);
+});
+
     console.log("✅ Dados salvos no localStorage:", dadosUsuario);
   } else {
     // Caso não haja parâmetros, apenas logar o status
