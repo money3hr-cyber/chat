@@ -1051,17 +1051,24 @@
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
 
-  // 🔹 Extrair dados do usuário
-  const dadosUsuario = {
-    nome: decodeURIComponent(params.get("nome") || ""),
-    cpf: decodeURIComponent(params.get("cpf") || ""),
-    telefone: decodeURIComponent(params.get("telefone") || params.get("numero") || ""),
-    data_nascimento: decodeURIComponent(params.get("data_nascimento") || ""),
-    sexo: decodeURIComponent(params.get("sexo") || ""),
-    nome_mae: decodeURIComponent(params.get("nome_mae") || "")
-  };
+  // Pega o que já existe no localStorage (salvo pela página anterior)
+  let dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario") || "{}");
 
-  // 🔹 Extrair e salvar UTMs automaticamente
+  // Se existir nome/cpf na URL, atualiza — senão mantém os que já estão salvos
+  const nomeUrl = decodeURIComponent(params.get("nome") || "");
+  const cpfUrl = decodeURIComponent(params.get("cpf") || "");
+  const telefoneUrl = decodeURIComponent(params.get("telefone") || params.get("numero") || "");
+
+  if (nomeUrl) dadosUsuario.nome = nomeUrl;
+  if (cpfUrl) dadosUsuario.cpf = cpfUrl;
+  if (telefoneUrl) dadosUsuario.telefone = telefoneUrl;
+
+  // Outros campos opcionais
+  dadosUsuario.data_nascimento = decodeURIComponent(params.get("data_nascimento") || dadosUsuario.data_nascimento || "");
+  dadosUsuario.sexo = decodeURIComponent(params.get("sexo") || dadosUsuario.sexo || "");
+  dadosUsuario.nome_mae = decodeURIComponent(params.get("nome_mae") || dadosUsuario.nome_mae || "");
+
+  // Extrair e salvar UTMs automaticamente
   const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   utmKeys.forEach(key => {
     if (params.has(key)) {
@@ -1071,17 +1078,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🔹 Salvar dados consolidados
+  // Salvar o JSON final (merge entre o que veio e o que já tinha)
   localStorage.setItem("dadosUsuario", JSON.stringify(dadosUsuario));
-  console.log("✅ Dados + UTMs salvos no localStorage:", dadosUsuario);
 
-  // 🔹 Logar status
-  const dadosSalvos = JSON.parse(localStorage.getItem("dadosUsuario") || "{}");
-  if (dadosSalvos && dadosSalvos.cpf) {
-    console.log("📦 Dados disponíveis no localStorage:", dadosSalvos);
-  } else {
-    console.warn("⚠️ Nenhum dado válido encontrado na URL.");
-  }
+  console.log("✅ Dados + UTMs sincronizados no localStorage:", dadosUsuario);
 });
 </script>
 
