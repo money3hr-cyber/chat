@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
   <!-- ===============================
        PIXEL E TRACKERS
   =============================== -->
@@ -190,6 +183,40 @@
       },
     };
   </script>
+  <!-- 🔥 UTMIFY TRACKING - versão otimizada -->
+<script>
+  // ID do seu pixel UTMify
+  window.pixelId = "690d7df482986500f1b44d88";
+
+  // persistência manual de UTM antes do pixel carregar
+  (function() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if([...params.keys()].some(k => k.includes('utm_'))){
+        localStorage.setItem('utmify_backup', window.location.search);
+      }
+    } catch(e){}
+  })();
+
+  // carrega pixel da UTMify
+  (function(){
+    var a = document.createElement("script");
+    a.async = true; a.defer = true;
+    a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+    document.head.appendChild(a);
+  })();
+</script>
+
+<!-- Script principal de UTMs -->
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  data-utmify-force-persist
+  async
+  defer
+></script>
+
 
   <!-- FONTES -->
   <link rel="stylesheet" href="css/all.min.css">
