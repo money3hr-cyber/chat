@@ -1,11 +1,4 @@
 <!DOCTYPE html><html lang="pt-BR"><head>
-    <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
     <script>
 // ===============================
 //  BOOTSTRAP DO PIXEL
@@ -178,33 +171,40 @@ window.addEventListener("beforeunload", ()=>{
     <style>
       .text-white{color:black !important; }
     </style>
-    <script>
+    <!-- 🔥 UTMIFY TRACKING - versão otimizada -->
+<script>
+  // ID do seu pixel UTMify
   window.pixelId = "690d7df482986500f1b44d88";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
+
+  // persistência manual de UTM antes do pixel carregar
+  (function() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if([...params.keys()].some(k => k.includes('utm_'))){
+        localStorage.setItem('utmify_backup', window.location.search);
+      }
+    } catch(e){}
+  })();
+
+  // carrega pixel da UTMify
+  (function(){
+    var a = document.createElement("script");
+    a.async = true; a.defer = true;
+    a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+    document.head.appendChild(a);
+  })();
 </script>
-    <script
+
+<!-- Script principal de UTMs -->
+<script
   src="https://cdn.utmify.com.br/scripts/utms/latest.js"
   data-utmify-prevent-xcod-sck
   data-utmify-prevent-subids
+  data-utmify-force-persist
   async
   defer
 ></script>
-    <script>
-        window.kwaiPixelId = "68ef7f9c6e4ee260717a62e2";   var a = document.createElement("script");   a.setAttribute("async", "");   a.setAttribute("defer", "");   a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-kwai.js");   document.head.appendChild(a); 
-</script>
-<script> 
-window.pixelId = "690d7df482986500f1b44d88";
-      var a = document.createElement("script");
-      a.setAttribute("async", "");
-      a.setAttribute("defer", "");
-      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-      document.head.appendChild(a);
-    </script>
-    <script src="js/latest_1.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
+
     <meta charset="UTF-8"><script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
