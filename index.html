@@ -838,17 +838,6 @@ window.addEventListener("beforeunload", ()=>{
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Verificar se temos os dados da API no localStorage
-      const dadosUsuarioJSON = localStorage.getItem("dadosUsuario");
-      if (!dadosUsuarioJSON) {
-        console.error("Dados do usuário não encontrados no localStorage");
-        alert(
-          "Dados do usuário não encontrados. Você será redirecionado para o início."
-        );
-        window.location.href = "./index.html";
-        return;
-      }
-
       // Tentar analisar os dados JSON
       try {
         const dadosUsuario = JSON.parse(dadosUsuarioJSON);
