@@ -1,4 +1,174 @@
-<!DOCTYPE html><html lang="pt-BR"><head><script>
+<!DOCTYPE html><html lang="pt-BR"><head>
+  <script>
+// ===============================
+//  BOOTSTRAP DO PIXEL
+// ===============================
+!function(f,b,e,v,n,t,s){
+  if(f.fbq)return;
+  n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;
+  n.push=n; n.loaded=!0; n.version='2.0';
+  n.queue=[];
+  t=b.createElement(e); t.async=!0;
+  t.src=v; s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1266369171942952');
+fbq('track', 'ViewContent');
+
+
+// ===============================
+//  UTM CAPTURE + PERSISTÊNCIA REAL
+// ===============================
+(function(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    let utm = JSON.parse(localStorage.getItem("utm_master") || "{}");
+
+    const keys = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
+
+    let changed = false;
+    keys.forEach(key=>{
+      const p = params.get(key);
+      if(p){
+        utm[key] = p;
+        changed = true;
+      }
+    });
+
+    if(changed){
+      localStorage.setItem("utm_master", JSON.stringify(utm));
+      fbq('trackCustom', 'UTM_Capture', utm);
+    }
+  } catch(e){}
+})();
+
+
+// ===============================
+//  SCROLL DEPTH (INTENÇÃO REAL)
+// ===============================
+(function(){
+  let flag = false;
+  window.addEventListener("scroll", ()=>{
+    if(flag) return;
+    const pos = (window.scrollY + window.innerHeight) / document.body.scrollHeight;
+    if(pos > 0.75){
+      flag = true;
+      fbq('trackCustom', 'Scroll75');
+    }
+  });
+})();
+
+
+// ===============================
+//  CLICK TRACKER UNIVERSAL ++
+// ===============================
+document.addEventListener("click", (e)=>{
+  const el = e.target.closest("a,button,input[type=submit]");
+  if(!el) return;
+
+  const text = (el.innerText || "").toLowerCase();
+  const href  = el.href || "";
+
+  // WhatsApp
+  if(href.includes("wa.me") || href.includes("api.whatsapp")){
+    fbq('trackCustom', 'Click_WhatsApp');
+  }
+
+  // Checkout
+  if(/comprar|finalizar|pagar|checkout|concluir/.test(text)){
+    fbq('track', 'InitiateCheckout');
+  }
+
+  // CTA genérico
+  if(/continuar|avançar|proximo|entrar/.test(text)){
+    fbq('trackCustom', 'Click_CTA');
+  }
+
+  // Detecção de abandono reverso (cliques em voltar)
+  if(el.getAttribute("onclick") && el.getAttribute("onclick").toLowerCase().includes("voltar")){
+    fbq('trackCustom', 'Back_Click');
+  }
+});
+
+
+// ===============================
+//  TEMPO DE SESSÃO + HEARTBEAT
+// ===============================
+(function(){
+  let t15 = false;
+  let t30 = false;
+  let heartbeatCounter = 0;
+
+  setInterval(()=>{
+    heartbeatCounter++;
+
+    if(heartbeatCounter === 15 && !t15){
+      t15 = true;
+      fbq('trackCustom', 'Time_15s');
+    }
+    if(heartbeatCounter === 30 && !t30){
+      t30 = true;
+      fbq('trackCustom', 'Time_30s');
+    }
+
+    // heartbeat envia ping leve
+    if(heartbeatCounter % 10 === 0){
+      fbq('trackCustom', 'HB');
+    }
+
+  }, 1000);
+})();
+
+
+// ===============================
+//  FOCUS / BLUR TRACKER (INTENÇÃO REAL)
+// ===============================
+(function(){
+  let focused = true;
+  window.addEventListener("blur", ()=>{
+    if(focused){
+      focused = false;
+      fbq('trackCustom', 'Blur');
+    }
+  });
+
+  window.addEventListener("focus", ()=>{
+    if(!focused){
+      focused = true;
+      fbq('trackCustom', 'Focus');
+    }
+  });
+})();
+
+
+// ===============================
+//  ABANDONO DA PÁGINA
+// ===============================
+window.addEventListener("beforeunload", ()=>{
+  fbq('trackCustom', 'ExitPage');
+});
+
+
+// ===============================
+//  DEVICE SIGNAL (sem dados sensíveis)
+// ===============================
+(function(){
+  try {
+    const d = {
+      w: screen.width,
+      h: screen.height,
+      lang: navigator.language,
+      ua: navigator.userAgent.slice(0,50)
+    };
+    fbq('trackCustom', 'Device_Signal', d);
+  } catch(e){}
+})();
+</script>
+
+  <script>
   window.pixelId = "68ef7f9c6e4ee260717a62e2";
   var a = document.createElement("script");
   a.setAttribute("async", "");
