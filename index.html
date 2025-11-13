@@ -838,22 +838,7 @@ window.addEventListener("beforeunload", ()=>{
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Tentar analisar os dados JSON
-      try {
-        const dadosUsuario = JSON.parse(dadosUsuarioJSON);
-        if (!dadosUsuario.nome || !dadosUsuario.cpf) {
-          console.error("Dados do usuário incompletos:", dadosUsuario);
-          alert("Dados incompletos. Você será redirecionado para o início.");
-          window.location.href = "./index.html";
-          return;
-        }
-        console.log(
-          "Dados do usuário válidos encontrados:",
-          dadosUsuario.nome,
-          dadosUsuario.cpf
-        );
-
-        // Limpar quaisquer outros valores salvos no localStorage que possam interferir
+    
         // Remover valores antigos para evitar conflitos
         localStorage.removeItem("nomeCompleto");
         localStorage.removeItem("cpfUsuario");
