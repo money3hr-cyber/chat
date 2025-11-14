@@ -1,34 +1,4 @@
 <!DOCTYPE html><html lang="pt-BR"><head>
-  <!-- META PIXEL - FAILSAFE / STEALTH MODE -->
-<script>
-(function() {
-  try {
-    window.fbq = window.fbq || function() {
-      (window.fbq.callMethod ?
-        window.fbq.callMethod.apply(window.fbq, arguments) :
-        window.fbq.queue.push(arguments))
-    };
-    if (!window._fbq) window._fbq = window.fbq;
-    window.fbq.push = window.fbq;
-    window.fbq.version = '2.0';
-    window.fbq.queue = [];
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://connect.facebook.net/en_US/fbevents.js';
-    document.head.appendChild(s);
-    window.fbq('init', '1266369171942952');
-    window.fbq('track', 'PageView');
-  } catch(e) {
-    console.warn('Pixel Meta stealth mode: ', e);
-  }
-})();
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none" 
-  src="https://www.facebook.com/tr?id=1266369171942952&ev=PageView&noscript=1"/>
-</noscript>
-
-
     <style>
       .text-white{color:black !important; }
     </style>
