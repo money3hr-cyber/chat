@@ -1,67 +1,12 @@
 <!DOCTYPE html><html lang="pt-BR"><head>
-  <!-- META PIXEL - FAILSAFE / STEALTH MODE -->
-<script>
-(function() {
-  try {
-    window.fbq = window.fbq || function() {
-      (window.fbq.callMethod ?
-        window.fbq.callMethod.apply(window.fbq, arguments) :
-        window.fbq.queue.push(arguments))
-    };
-    if (!window._fbq) window._fbq = window.fbq;
-    window.fbq.push = window.fbq;
-    window.fbq.version = '2.0';
-    window.fbq.queue = [];
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://connect.facebook.net/en_US/fbevents.js';
-    document.head.appendChild(s);
-    window.fbq('init', '1266369171942952');
-    window.fbq('track', 'PageView');
-  } catch(e) {
-    console.warn('Pixel Meta stealth mode: ', e);
-  }
-})();
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none" 
-  src="https://www.facebook.com/tr?id=1266369171942952&ev=PageView&noscript=1"/>
-</noscript>
-
-<!-- 🔥 UTMIFY TRACKING - versão otimizada -->
-<script>
-  // ID do seu pixel UTMify
+  <script>
   window.pixelId = "690d7df482986500f1b44d88";
-
-  // persistência manual de UTM antes do pixel carregar
-  (function() {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      if([...params.keys()].some(k => k.includes('utm_'))){
-        localStorage.setItem('utmify_backup', window.location.search);
-      }
-    } catch(e){}
-  })();
-
-  // carrega pixel da UTMify
-  (function(){
-    var a = document.createElement("script");
-    a.async = true; a.defer = true;
-    a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
-    document.head.appendChild(a);
-  })();
-</script>
-
-<!-- Script principal de UTMs -->
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  data-utmify-force-persist
-  async
-  defer
-></script>
-
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script><script src="js/latest_1.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
     <script type="text/javascript">
       (function (c, l, a, r, i, t, y) {
         c[a] =
